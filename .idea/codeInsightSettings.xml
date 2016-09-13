@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaProjectCodeInsightSettings">
+    <excluded-names>
+      <name>com.google.gdata.util.common.base</name>
+      <name>com.google.inject</name>
+      <name>com.hazelcast.nio.IOUtil</name>
+      <name>com.hazelcast.util</name>
+      <name>com.sun</name>
+      <name>de.unkrig.commons</name>
+      <name>groovy.transform</name>
+      <name>junit.framework</name>
+      <name>netscape.javascript</name>
+      <name>oracle.jdbc.proxy</name>
+      <name>org.apache.batik.util</name>
+      <name>org.apache.commons.compress.utils</name>
+      <name>org.apache.poi.hdf.extractor</name>
+      <name>org.apache.poi.hwpf.model</name>
+      <name>org.apache.xmlbeans.impl</name>
+      <name>org.bouncycastle.asn1</name>
+      <name>org.bouncycastle.crypto</name>
+      <name>org.bouncycastle.jce</name>
+      <name>org.bouncycastle.util</name>
+      <name>org.elasticsearch.common</name>
+      <name>org.elasticsearch.plugins</name>
+      <name>org.hamcrest.CoreMatchers</name>
+      <name>org.hamcrest.collection.IsCollectionWithSize</name>
+      <name>org.hsqldb.lib</name>
+      <name>org.htmlparser.filters</name>
+      <name>org.htmlparser.lexer.Page</name>
+      <name>sun.misc</name>
+      <name>sun.nio</name>
+      <name>sun.org.mozilla.javascript</name>
+      <name>sun.plugin2</name>
+      <name>sun.security.krb5</name>
+    </excluded-names>
+  </component>
+</project>

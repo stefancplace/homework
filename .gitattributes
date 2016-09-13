@@ -1,0 +1,4 @@
+# Prevent Git from parsing PDF files when using "git log -S"; the embedded PDF parser does not handle all PDF so well, leading to messages like "May not be a PDF file (continuing anyway)"
+# see http://stackoverflow.com/questions/9656552/how-to-turn-off-git-1-7-8-overhead-for-binary-files-doc-pdf-etc
+*.pdf !diff
+*.PDF !diff

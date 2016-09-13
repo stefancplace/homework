@@ -1,0 +1,28 @@
+machine:
+  node:
+    version: 0.12.0
+  environment:
+    _JAVA_OPTIONS: "-Xmx512m -XX:MaxPermSize=128M"
+    CIRCLE_NODE_TOTAL:
+
+#  pre:
+#    - FILE=$CIRCLE_ARTIFACTS/memory-usage-actual.txt; while true; do ps -u ubuntu eo pid,%cpu,%mem,args,uname --sort=-%mem >> $FILE; echo "----------" >> $FILE; sleep 1; done: # note the colon here
+#        background: true
+
+#  java:
+#    version: oraclejdk8
+
+checkout:
+  post:
+    - mkdir -p /home/ubuntu/repos; mv /home/ubuntu/cplace-bmw /home/ubuntu/repos/
+    - node /home/ubuntu/repos/cplace-bmw/repo-scripts.js clone-repos --chdir /home/ubuntu/repos/cplace-bmw --verbose
+    - node /home/ubuntu/repos/cplace-bmw/repo-scripts.js update-repos --chdir /home/ubuntu/repos/cplace-bmw --verbose
+    - mv /home/ubuntu/main /home/ubuntu/repos/main; mkdir /home/ubuntu/cplace-bmw
+
+general:
+  build_dir: ../repos/main
+
+test:
+  override:
+    - ant test-or-build -logger org.apache.tools.ant.listener.ProfileLogger -DincludeOnlyRepoNames=cplace-bmw :
+        parallel: true
