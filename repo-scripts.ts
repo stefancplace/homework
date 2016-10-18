@@ -2,7 +2,7 @@
 
 /*
  * Compile this file to js with the following command:
- * npm run compile-scripts
+ * npm run compile-repo-scripts
  *
  * Usage:
  * node repo-scripts.js
@@ -21,6 +21,19 @@ var sys = require('util'),
 
 // Set to true for some debug logging.
 var debug = false;
+
+var simpleGitFetch = (simpleGit, repoName) => {
+    var deferred = Q.defer();
+    simpleGit.fetch((err, result) => {
+        if (err) {
+            deferred.reject(err);
+        } else {
+            console.log('repo ' + repoName + ' successfully fetched');
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+};
 
 var simpleGitStatus = (simpleGit, repoName, repoProperties) => {
     var deferred = Q.defer();
@@ -77,6 +90,21 @@ var simpleGitCheckoutCommit = (simpleGit, repoName, commit) => {
             deferred.reject(err);
         } else  {
             console.log('repo ' + repoName + ' is now in commit', commit);
+            deferred.resolve(result);
+        }
+    });
+
+    return deferred.promise;
+};
+
+var simpleGitResetHard = (simpleGit, repoName) => {
+    var deferred = Q.defer();
+
+    simpleGit.reset('hard', (err, result) => {
+        if (err) {
+            deferred.reject(err);
+        } else  {
+            console.log('repo ' + repoName + ' has been resetted');
             deferred.resolve(result);
         }
     });
@@ -153,7 +181,12 @@ var simpleGitRevParseHead = (simpleGit, repoName, repoProperties) => {
 
                     let simpleGit = require('simple-git')('../' + repoName);
 
-                    simpleGitStatus(simpleGit, repoName, repoProperties).then(simpleGitCheckoutBranch(simpleGit, repoName, branch)).then(simpleGitCheckoutCommit(simpleGit, repoName, commit));
+                    simpleGitFetch(simpleGit, repoName).then(
+                        simpleGitStatus(simpleGit, repoName, repoProperties)).then(
+                            simpleGitCheckoutBranch(simpleGit, repoName, branch)).then(
+                                simpleGitCheckoutCommit(simpleGit, repoName, commit).then(
+                                    simpleGitResetHard(simpleGit, repoName)
+                                ));
                 }
             }
             return;

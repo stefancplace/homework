@@ -2,6 +2,19 @@
 var sys = require('util'), fs = require('fs'), path = require('path'), events = require('events'), exec = require('child_process').exec, os = require("os"), Q = require("q");
 // Set to true for some debug logging.
 var debug = false;
+var simpleGitFetch = function (simpleGit, repoName) {
+    var deferred = Q.defer();
+    simpleGit.fetch(function (err, result) {
+        if (err) {
+            deferred.reject(err);
+        }
+        else {
+            console.log('repo ' + repoName + ' successfully fetched');
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+};
 var simpleGitStatus = function (simpleGit, repoName, repoProperties) {
     var deferred = Q.defer();
     simpleGit.status(function (err, result) {
@@ -56,6 +69,19 @@ var simpleGitCheckoutCommit = function (simpleGit, repoName, commit) {
         }
         else {
             console.log('repo ' + repoName + ' is now in commit', commit);
+            deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+};
+var simpleGitResetHard = function (simpleGit, repoName) {
+    var deferred = Q.defer();
+    simpleGit.reset('hard', function (err, result) {
+        if (err) {
+            deferred.reject(err);
+        }
+        else {
+            console.log('repo ' + repoName + ' has been resetted');
             deferred.resolve(result);
         }
     });
@@ -117,7 +143,7 @@ var simpleGitRevParseHead = function (simpleGit, repoName, repoProperties) {
                     var branch = repoProperties.branch;
                     debug && console.log('branch', branch);
                     var simpleGit = require('simple-git')('../' + repoName);
-                    simpleGitStatus(simpleGit, repoName, repoProperties).then(simpleGitCheckoutBranch(simpleGit, repoName, branch)).then(simpleGitCheckoutCommit(simpleGit, repoName, commit));
+                    simpleGitFetch(simpleGit, repoName).then(simpleGitStatus(simpleGit, repoName, repoProperties)).then(simpleGitCheckoutBranch(simpleGit, repoName, branch)).then(simpleGitCheckoutCommit(simpleGit, repoName, commit).then(simpleGitResetHard(simpleGit, repoName)));
                 }
             }
             return;
