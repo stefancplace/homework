@@ -16,7 +16,7 @@ dependencies:
   cache_directories:
       - "/home/ubuntu/main/.git"
   pre:
-    - mkdir -p /home/ubuntu/software
+    - mkdir -p /home/ubuntu/target/software
     - >
       if [ -a /home/ubuntu/main/.git ];
       then
@@ -34,5 +34,5 @@ general:
 
 test:
   override:
-    - ant test-or-build -DincludeOnlyRepoNames=$CIRCLE_PROJECT_REPONAME -Dsoftware-dir=/home/ubuntu/software -Dcplace.store.hsqldb.useFile=false :
+    - ant test-or-build -DincludeOnlyRepoNames=$CIRCLE_PROJECT_REPONAME -Dsoftware-dir=/home/ubuntu/target/software -Dcplace.store.hsqldb.useFile=false :
         parallel: true
