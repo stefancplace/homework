@@ -1,0 +1,44 @@
+<project name="root" basedir="." default="test">
+
+    <property environment="env"/>
+    <property file="build.properties"/>
+
+    <target name="test" depends="-jar-packaging">
+        <ant antfile="build.xml" target="test" dir="../main/packaging"/>
+    </target>
+
+    <target name="-jar-packaging">
+        <ant antfile="build-packaging.xml" target="jar-packaging" dir="../main/packaging"/>
+    </target>
+
+    <target name="build-and-upload" depends="-jar-packaging">
+        <ant antfile="build.xml" target="build-and-upload" dir="../main/packaging"/>
+        <echo message="CIRCLE_NODE_TOTAL: ${env.CIRCLE_NODE_TOTAL}"/>
+        <echo message="CIRCLE_NODE_INDEX: ${env.CIRCLE_NODE_INDEX}"/>
+    </target>
+
+    <target name="test-or-build" depends="-jar-packaging">
+        <ant antfile="build.xml" target="test-or-build" dir="../main/packaging"/>
+    </target>
+
+    <target name="clone skeletonWithEmptyApp">
+        <ant antfile="build.xml" target="-clone-skeleton" dir="../main/cf.cplace.platform">
+            <property name="newPluginRepo" value="${basedir}" />
+            <property name="sourceNameWithLowerCaseFirstLetter" value="skeletonWithEmptyApp" />
+        </ant>
+    </target>
+
+    <target name="clone skeletonWithJavascriptWidget">
+        <ant antfile="build.xml" target="-clone-skeleton" dir="../main/cf.cplace.platform">
+            <property name="newPluginRepo" value="${basedir}" />
+            <property name="sourceNameWithLowerCaseFirstLetter" value="skeletonWithJavascriptWidget" />
+        </ant>
+    </target>
+
+    <target name="clone skeletonWithTypescript">
+        <ant antfile="build.xml" target="-clone-skeleton" dir="../main/cf.cplace.platform">
+            <property name="newPluginRepo" value="${basedir}" />
+            <property name="sourceNameWithLowerCaseFirstLetter" value="skeletonWithTypescript" />
+        </ant>
+    </target>
+</project>
