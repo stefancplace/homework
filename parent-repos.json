@@ -1,7 +1,6 @@
 {
   "main": {
     "url": "git@github.com:collaborationFactory/cplace.git",
-    "branch": "master",
-    "commit": "cf88f66197ee07d0038ac981bafa0a994c37d075"
+    "branch": "master"
   }
 }

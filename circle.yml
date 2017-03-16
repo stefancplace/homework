@@ -1,21 +1,23 @@
 machine:
   node:
-    version: 0.12.0
+    version: 6.1
   environment:
     _JAVA_OPTIONS: "-Xmx512m -XX:MaxPermSize=128M"
     REPO_NAME: "cplace-customer-repo-skeleton"
+  java:
+    version: oraclejdk8
 
 #  pre:
 #    - FILE=$CIRCLE_ARTIFACTS/memory-usage-actual.txt; while true; do ps -u ubuntu eo pid,%cpu,%mem,args,uname --sort=-%mem >> $FILE; echo "----------" >> $FILE; sleep 1; done: # note the colon here
 #        background: true
 
-#  java:
-#    version: oraclejdk8
-
 dependencies:
   cache_directories:
       - "/home/ubuntu/main/.git"
+      - "/opt/circleci/nodejs/v6.1.0/bin"
+      - "/opt/circleci/nodejs/v6.1.0/lib/node_modules"
   pre:
+    - npm install -g @cplace/cli
     - mkdir -p /home/ubuntu/target/software
     - >
       if [ -a /home/ubuntu/main/.git ];
@@ -23,11 +25,11 @@ dependencies:
           echo "main repo exists already"
       else
           echo "main repo does not exit"
-          node /home/ubuntu/$CIRCLE_PROJECT_REPONAME/repo-scripts.js clone-repos --chdir /home/ubuntu/$CIRCLE_PROJECT_REPONAME --verbose
+          cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --clone --verbose --force
       fi
 
       echo "updating parent repos";
-      node /home/ubuntu/$CIRCLE_PROJECT_REPONAME/repo-scripts.js update-repos --chdir /home/ubuntu/$CIRCLE_PROJECT_REPONAME --verbose
+      cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --update --verbose --force
 
 general:
   build_dir: ../main
