@@ -1,3 +1,3 @@
 #!/bin/bash
 # Execute repo update
-node repo-scripts.js u
+cplace-cli repos -u %1 %2 %3 %4
