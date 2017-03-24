@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" group="platform" />
+      <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" group="platform" />
       <module fileurl="file://$PROJECT_DIR$/../main/packaging/packaging.iml" filepath="$PROJECT_DIR$/../main/packaging/packaging.iml" group="platform" />
       <module fileurl="file://$PROJECT_DIR$/../main/serverActions/serverActions.iml" filepath="$PROJECT_DIR$/../main/serverActions/serverActions.iml" group="platform" />
     </modules>
