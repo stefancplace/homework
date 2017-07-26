@@ -54,3 +54,6 @@ jshint-all-*.txt
 
 npm-debug.log
 out
+
+# see .gitattributes
+/CHANGELOG.md
