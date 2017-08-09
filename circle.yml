@@ -11,6 +11,8 @@ machine:
 #    - FILE=$CIRCLE_ARTIFACTS/memory-usage-actual.txt; while true; do ps -u ubuntu eo pid,%cpu,%mem,args,uname --sort=-%mem >> $FILE; echo "----------" >> $FILE; sleep 1; done: # note the colon here
 #        background: true
 
+# When you add another parent repo, also update the cache_directories and the if condition below.
+
 dependencies:
   cache_directories:
       - "/home/ubuntu/main/.git"
@@ -19,21 +21,16 @@ dependencies:
   pre:
     - npm install -g @cplace/cli
     - mkdir -p /home/ubuntu/target/software
+    - git reset --hard
     - >
       if [ -a /home/ubuntu/main/.git ];
       then
-          echo "main repo exists already"
-          git reset --hard
+          echo "all parents repos exists already"
       else
-          echo "main repo does not exit"
-          cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --clone --verbose --force
+          echo "at least one parent repo does not exist"; /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --clone --verbose --force
       fi
-
-      echo "updating parent repos"
-      cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --update --verbose --force
-
-      echo "freezing parent repos"
-      cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos -w --freeze --verbose --force
+    - echo "updating parent repos"; cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --update --verbose --force
+    - echo "freezing parent repos"; cd /home/ubuntu/$CIRCLE_PROJECT_REPONAME && cplace-cli repos -w --freeze --verbose --force
 
 test:
   override:
