@@ -24,19 +24,26 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
         }
     };
 
-    Page rootPage;
+    private Page rootPage;
 
     @Override
     protected Station doDoBusinessLogic() {
+        rootPage = buildRootSpace();
+        loginUser();
+
+        return GO;
+    }
+
+    private Page buildRootSpace() {
         PageSpace space = PageTestHelper.getRootSpace();
         space = space.createWritableCopy();
         space.addApp(ImdbPlugin.INSTANCE().app);
         space.persist();
 
-        rootPage = space.getRootPageWithoutReadAccessCheck();
+        return space.getRootPageWithoutReadAccessCheck();
+    }
+
+    private void loginUser() {
         TestHelper.setCurrentUser(TestHelper.getMustermannNoCheckAccess());
-
-
-        return GO;
     }
 }
