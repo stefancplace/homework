@@ -1,0 +1,7 @@
+--sourceMap
+--out generated_js/tsc.js
+--declaration
+
+ts/app.ts
+ts/controllers/DummyCtrl.ts
+ts/directives/dummyDirective.ts

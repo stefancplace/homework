@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/platform/src/classes/de/infoasset/platform/server/Main.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="cf.cplace.platform.server.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="de.quinscape.workshop.imdb-test"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="de.quinscape.workshop.imdb"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DrunMode=test -XX:MaxPermSize=128M"/>
+</launchConfiguration>
