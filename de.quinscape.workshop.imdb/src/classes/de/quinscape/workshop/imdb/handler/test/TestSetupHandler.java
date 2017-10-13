@@ -7,6 +7,7 @@ import cf.cplace.platform.handler.Forwarder;
 import cf.cplace.platform.handler.Line;
 import cf.cplace.platform.handler.Station;
 import cf.cplace.platform.internationalization.Message;
+import cf.cplace.platform.test.TestHelper;
 import cf.cplace.platform.test.page.PageTestHelper;
 import de.quinscape.workshop.imdb.ImdbPlugin;
 
@@ -33,6 +34,9 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
         space.persist();
 
         rootPage = space.getRootPageWithoutReadAccessCheck();
+        TestHelper.setCurrentUser(TestHelper.getMustermannNoCheckAccess());
+
+
         return GO;
     }
 }

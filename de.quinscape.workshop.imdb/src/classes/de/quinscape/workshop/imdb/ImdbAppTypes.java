@@ -14,6 +14,7 @@ import cf.cplace.platform.assets.custom.def.AttributeDef;
 import cf.cplace.platform.assets.custom.def.MultiPageReferenceAttributeDef;
 import cf.cplace.platform.assets.custom.def.SingleBooleanAttributeDef;
 import cf.cplace.platform.assets.custom.def.SingleDateAttributeDef;
+import cf.cplace.platform.assets.custom.def.SingleDocumentReferenceAttributeDef;
 import cf.cplace.platform.assets.custom.def.SingleNumberAttributeDef;
 import cf.cplace.platform.assets.custom.def.SinglePageReferenceAttributeDef;
 import cf.cplace.platform.assets.custom.def.SingleReferenceAttributeDef;
@@ -28,8 +29,6 @@ import cf.cplace.platform.widget.WidgetContainerDef;
 import cf.cplace.platform.widget.WidgetHelper;
 
 public class ImdbAppTypes {
-
-
     @FixedAppTypes.Fixed(orderIndex = 300)
     public static class CF_CPLACE_LANDINGPAGE_LEVEL0 {
 
@@ -92,7 +91,7 @@ public class ImdbAppTypes {
         public static final Message cf_cplace_landingPage_thumbnail_name = new Message() {
         };
 
-        public static final SingleReferenceAttributeDef CF_CPLACE_LANDINGPAGE_THUMBNAIL =
+        public static final SingleDocumentReferenceAttributeDef CF_CPLACE_LANDINGPAGE_THUMBNAIL =
                 AttributeDef.build("cf.cplace.landingPage.thumbnail", cf_cplace_landingPage_thumbnail_name,
                         TypeConstraintFactories.linkDocumentConstraint(Multiplicities.exactlyOne, TypeConstraintFactories.NO_TYPE_NAMES, null, true));
 
@@ -300,8 +299,6 @@ public class ImdbAppTypes {
                 WIDGET_CONTAINER_DEF
                 , CF_CPLACE_LANDINGPAGE_NAME, CF_CPLACE_LANDINGPAGE_LEVEL0REFERENCE, CF_CPLACE_LANDINGPAGE_ICON, CF_CPLACE_LANDINGPAGE_ORDER, CF_CPLACE_LANDINGPAGE_PAGEREFERENCE, CF_CPLACE_LANDINGPAGE_URLREFERENCE, CF_CPLACE_LANDINGPAGE_URLREFERENCEMODAL)
                 .withNotFixedNameGenerationPattern("<cf.cplace.landingPage.name>")
-
-
                 .withHiddenInGlobalSearch();
     }
 
@@ -330,6 +327,7 @@ public class ImdbAppTypes {
         public static final SingleNumberAttributeDef CF_CPLACE_LANDINGPAGE_ORDER =
                 AttributeDef.build("cf.cplace.landingPage.order", cf_cplace_landingPage_order_name,
                         TypeConstraintFactories.numberConstraint(Multiplicities.maximalOne));
+
         public static final Message name_singular = new Message() {
         };
         public static final Message name_plural = new Message() {
@@ -348,6 +346,31 @@ public class ImdbAppTypes {
 
 
                 .withHiddenInGlobalSearch();
+    }
+
+    @FixedAppTypes.Fixed(orderIndex = 800)
+    public static class GENRE {
+
+        public static final Message genre_name_name = new Message() {
+        };
+
+        public static final SingleStringAttributeDef GENRE_NAME =
+                AttributeDef.build("genre.name", genre_name_name,
+                        TypeConstraintFactories.stringConstraint(Multiplicities.maximalOne));
+        public static final Message name_singular = new Message() {
+        };
+        public static final Message name_plural = new Message() {
+        };
+        private static final WidgetContainerDef WIDGET_CONTAINER_DEF = WidgetContainerDef.createFromLayoutWithWidgetsWithContent(
+                Layout.fromRows(
+                        Row.fromColumns(
+                                new Column(12, WidgetHelper.WIKI)),
+                        Row.fromColumns(
+                                new Column(6, WidgetHelper.ATTRIBUTES),
+                                new Column(6, WidgetHelper.INCOMING_REFERENCES))));
+        public static final TypeDef TYPE = new TypeDef("Genre", name_singular, name_plural, " ",
+                WIDGET_CONTAINER_DEF
+                , GENRE_NAME);
     }
 
     @FixedAppTypes.Fixed(orderIndex = 700)
@@ -487,6 +510,4 @@ public class ImdbAppTypes {
                 WIDGET_CONTAINER_DEF
                 , IMDB_DIRECTOR_BIRTHDATE, IMDB_DIRECTOR_DEATH);
     }
-
-
 }
