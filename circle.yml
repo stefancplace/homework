@@ -3,7 +3,7 @@ machine:
     version: 6.1
   environment:
     _JAVA_OPTIONS: "-Xmx512m -XX:MaxPermSize=128M"
-    REPO_NAME: "cplace-customer-repo-skeleton"
+    REPO_NAME: "cplace-quinscape-workshop"
   java:
     version: oraclejdk8
 
