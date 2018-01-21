@@ -381,7 +381,7 @@ public class ImdbAppTypes {
         public static final Message imdb_cover_shortName = new Message() {
         };
 
-        public static final SingleDocumentReferenceAttributeDef IMDB_COVER =
+        public static final SingleReferenceAttributeDef IMDB_COVER =
                 AttributeDef.build("imdb.cover", imdb_cover_name,
                         TypeConstraintFactories.linkDocumentConstraint(Multiplicities.maximalOne, "default.file", null, true))
                         .withLocalizedShortName(imdb_cover_shortName);
