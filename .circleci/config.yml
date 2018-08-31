@@ -1,0 +1,69 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/collaborationFactory/cplace-quinscape-workshop
+    parallelism: 1
+    shell: /bin/bash --login
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+      _JAVA_OPTIONS: -Xmx512m -XX:MaxPermSize=128M
+      REPO_NAME: cplace-quinscape-workshop
+    steps:
+    - restore_cache:
+        keys:
+          - source-v1-{{ .Branch }}-{{ .Revision }}
+          - source-v1-{{ .Branch }}-
+          - source-v1-
+    - checkout
+    - restore_cache:
+        keys:
+          - parents-v1-{{ checksum "parent-repos.json" }}-{{ .Branch }}-{{ .Revision }}
+          - parents-v1-{{ checksum "parent-repos.json" }}-{{ .Branch }}-
+          - parents-v1-{{ checksum "parent-repos.json" }}-
+    - save_cache:
+        key: source-v1-{{ .Branch }}-{{ .Revision }}
+        paths:
+          - ".git"
+
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    - run:
+        working_directory: ~/collaborationFactory/cplace-quinscape-workshop
+        command: nvm install 6.1 && nvm alias default 6.1
+    - run:
+        working_directory: ~/collaborationFactory/cplace-quinscape-workshop
+        command: sudo update-alternatives --set java /usr/lib/jvm/jdk1.8.0/bin/java; sudo update-alternatives --set javac /usr/lib/jvm/jdk1.8.0/bin/javac; echo -e "export JAVA_HOME=/usr/lib/jvm/jdk1.8.0" >> $BASH_ENV
+
+    - run: npm install -g @cplace/cli
+    - run: mkdir -p ~/target/software
+    - run: git reset --hard
+
+    # Make sure other repositories are reset before checking out/updating
+    # If you add more dependencies to parent-repos.json also add them here
+    - run: if [ -d "~/collaborationFactory/main" ]; then cd ~/collaborationFactory/main && git reset --hard; fi
+
+    - run: echo "clone missing parent repos"; cd ~/collaborationFactory/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --clone --verbose --force
+    - run: echo "updating parent repos"; cd ~/collaborationFactory/$CIRCLE_PROJECT_REPONAME && cplace-cli repos --update --verbose --force
+
+    # Save the currently checked out other repositories before freezing and building
+    # If you add more dependencies to parent-repos.json also add them here
+    - save_cache:
+        key: parents-v1-{{ checksum "parent-repos.json" }}-{{ .Branch }}-{{ .Revision }}
+        paths:
+          - "~/collaborationFactory/main/.git"
+
+    - run: echo "freezing parent repos"; cd ~/collaborationFactory/$CIRCLE_PROJECT_REPONAME && cplace-cli repos -w --freeze --verbose --force
+
+    # Test
+    - run: ant test-or-build -Dsoftware-dir="~/target/software" -Dcplace.store.hsqldb.useFile=false
+
+    # Teardown
+    # Save test results
+    - store_test_results:
+        path: /tmp/circleci-test-results
+    # Save artifacts
+    - store_artifacts:
+        path: /tmp/circleci-artifacts
+    - store_artifacts:
+        path: /tmp/circleci-test-results
