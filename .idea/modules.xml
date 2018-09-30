@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" group="main" />
       <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" group="main" />
-      <module fileurl="file://$PROJECT_DIR$/de.quinscape.workshop.imdb/de.quinscape.workshop.imdb.iml" filepath="$PROJECT_DIR$/de.quinscape.workshop.imdb/de.quinscape.workshop.imdb.iml" group="customer" />
       <module fileurl="file://$PROJECT_DIR$/../main/packaging/packaging.iml" filepath="$PROJECT_DIR$/../main/packaging/packaging.iml" group="main" />
       <module fileurl="file://$PROJECT_DIR$/release-notes/release-notes.iml" filepath="$PROJECT_DIR$/release-notes/release-notes.iml" group="customer" />
       <module fileurl="file://$PROJECT_DIR$/../main/serverActions/serverActions.iml" filepath="$PROJECT_DIR$/../main/serverActions/serverActions.iml" group="main" />
