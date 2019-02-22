@@ -36,10 +36,10 @@
         </ant>
     </target>
 
-    <target name="clone skeletonWithTypescript">
+    <target name="clone skeletonWithTypescriptAndLess">
         <ant antfile="build.xml" target="-clone-skeleton" dir="${pathToMain}/cf.cplace.platform">
             <property name="newPluginRepo" value="${basedir}" />
-            <property name="sourceNameWithLowerCaseFirstLetter" value="skeletonWithTypescript" />
+            <property name="sourceNameWithLowerCaseFirstLetter" value="skeletonWithTypescriptAndLess" />
         </ant>
     </target>
 </project>
