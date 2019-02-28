@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.asposeReporting/cf.cplace.asposeReporting.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.asposeReporting/cf.cplace.asposeReporting.iml" group="main" />
+      <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.handsOnTable/cf.cplace.handsOnTable.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.handsOnTable/cf.cplace.handsOnTable.iml" group="main" />
+      <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.layoutTabsWidget/cf.cplace.layoutTabsWidget.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.layoutTabsWidget/cf.cplace.layoutTabsWidget.iml" group="main" />
+      <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.pageViewHeadline/cf.cplace.pageViewHeadline.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.pageViewHeadline/cf.cplace.pageViewHeadline.iml" group="main" />
       <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.platform/cf.cplace.platform.iml" group="main" />
       <module fileurl="file://$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" filepath="$PROJECT_DIR$/../main/cf.cplace.training.extended/cf.cplace.training.extended.iml" group="main" />
       <module fileurl="file://$PROJECT_DIR$/../main/packaging/packaging.iml" filepath="$PROJECT_DIR$/../main/packaging/packaging.iml" group="main" />
