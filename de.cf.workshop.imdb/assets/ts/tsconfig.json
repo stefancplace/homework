@@ -1,0 +1,34 @@
+{
+    "extends": "..\\..\\..\\..\\main\\tsconfig.base.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "baseUrl": ".",
+        "outDir": "../generated_js",
+        "sourceMap": true,
+        "declarationMap": true,
+        "paths": {
+            "@cf.cplace.platform/*": [
+                "..\\..\\..\\..\\main\\cf.cplace.platform\\assets\\ts/*"
+            ],
+            "*": [
+                "*",
+                "..\\..\\..\\..\\main/node_modules/@types/*",
+                "..\\..\\..\\..\\main/cf.cplace.platform/assets/@cplaceTypes/*"
+            ],
+            "@cf.cplace.dragAndDropImageView/*": [
+                "..\\..\\..\\..\\main\\cf.cplace.dragAndDropImageView\\assets\\ts/*"
+            ]
+        }
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "..\\..\\..\\..\\main\\cf.cplace.platform\\assets\\ts"
+        },
+        {
+            "path": "..\\..\\..\\..\\main\\cf.cplace.dragAndDropImageView\\assets\\ts"
+        }
+    ]
+}

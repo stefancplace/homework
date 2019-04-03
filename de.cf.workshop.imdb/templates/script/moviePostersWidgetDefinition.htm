@@ -1,0 +1,9 @@
+<de-cf-workshop-imdb-movie-posters data-state="$state$" class="de-cf-workshop-style">
+
+    <div ng-repeat="movie in moviePostersCtrl.movies">
+        <img ng-src="{{movie.coverUrl}}" alt="{{movie.title}}"/>
+        <h1>{{movie.title}}</h1>
+        <p>{{movie.date}}</p>
+    </div>
+
+</de-cf-workshop-imdb-movie-posters>

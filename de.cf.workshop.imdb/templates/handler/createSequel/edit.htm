@@ -1,0 +1,11 @@
+<form method="post" action="$submitUrl$" class="tricia-edit-form modal-form form-horizontal" cplace-form-provider>
+    $[defaultDialogHeader()$
+    <h1>$(title)$</h1>
+    $defaultDialogHeader]$
+
+    <div class="modal-body">
+        $messages()$
+        $this.editCustomAttributes()$
+        $defaultDialogButtonBar(submit="next",cancel="cancel")$
+    </div>
+</form>

@@ -1,0 +1,21 @@
+<div>
+    $[defaultDialogHeader()$
+    <h1>$(title)$</h1>
+    $defaultDialogHeader]$
+
+    <div class="modal-body">
+        $messages()$
+
+        $[condition$
+        <p>Name des eingeloggten Nutzers: $userName$</p>
+        $condition]$
+
+
+        <ul>
+        $[list listElement$
+        <li>$listElement.name$ : $listElement.link()$</li>
+        $list]$
+        </ul>
+        <button class="btn btn-default" data-dismiss="modal">Ok</button>
+    </div>
+</div>
