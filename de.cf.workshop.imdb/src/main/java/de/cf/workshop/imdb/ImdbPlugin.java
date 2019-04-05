@@ -13,6 +13,7 @@ import cf.cplace.platform.services.PluginCssExtension;
 import cf.cplace.platform.services.SingleAngularModuleExtension;
 import de.cf.workshop.imdb.handler.test.TestSetupHandler;
 import de.cf.workshop.imdb.script.CreateSequelWidgetDefinition;
+import de.cf.workshop.imdb.script.MatrixWidgetDefinition;
 import de.cf.workshop.imdb.script.MoviePostersWidgetDefinition;
 
 @SuppressWarnings("unused")
@@ -39,6 +40,8 @@ public final class ImdbPlugin extends Plugin {
     final CreateSequelWidgetDefinition createSequelWidgetDefinition = new CreateSequelWidgetDefinition();
 
     final MoviePostersWidgetDefinition moviePostersWidgetDefinition = new MoviePostersWidgetDefinition();
+
+    final MatrixWidgetDefinition matrixWidgetDefinition = new MatrixWidgetDefinition();
 
     final TestSetupHandlerExtension testSetupHandlerExtension = new TestSetupHandlerExtension(TestSetupHandler.class);
 

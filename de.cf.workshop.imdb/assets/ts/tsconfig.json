@@ -1,5 +1,5 @@
 {
-    "extends": "..\\..\\..\\..\\main\\tsconfig.base.json",
+    "extends": "../../../../main/tsconfig.base.json",
     "compilerOptions": {
         "rootDir": ".",
         "baseUrl": ".",
@@ -8,15 +8,15 @@
         "declarationMap": true,
         "paths": {
             "@cf.cplace.platform/*": [
-                "..\\..\\..\\..\\main\\cf.cplace.platform\\assets\\ts/*"
+                "../../../../main/cf.cplace.platform/assets/ts/*"
             ],
             "*": [
                 "*",
-                "..\\..\\..\\..\\main/node_modules/@types/*",
-                "..\\..\\..\\..\\main/cf.cplace.platform/assets/@cplaceTypes/*"
+                "../../../../main/node_modules/@types/*",
+                "../../../../main/cf.cplace.platform/assets/@cplaceTypes/*"
             ],
             "@cf.cplace.dragAndDropImageView/*": [
-                "..\\..\\..\\..\\main\\cf.cplace.dragAndDropImageView\\assets\\ts/*"
+                "../../../../main/cf.cplace.dragAndDropImageView/assets/ts/*"
             ]
         }
     },
@@ -25,10 +25,10 @@
     ],
     "references": [
         {
-            "path": "..\\..\\..\\..\\main\\cf.cplace.platform\\assets\\ts"
+            "path": "../../../../main/cf.cplace.platform/assets/ts"
         },
         {
-            "path": "..\\..\\..\\..\\main\\cf.cplace.dragAndDropImageView\\assets\\ts"
+            "path": "../../../../main/cf.cplace.dragAndDropImageView/assets/ts"
         }
     ]
 }

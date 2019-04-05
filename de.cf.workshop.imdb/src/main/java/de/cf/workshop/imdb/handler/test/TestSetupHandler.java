@@ -4,7 +4,11 @@
 
 package de.cf.workshop.imdb.handler.test;
 
+import static cf.cplace.training.extended.handler.test.TestSetupHandler.createAbteilung;
+import static cf.cplace.training.extended.handler.test.TestSetupHandler.createMitarbeiter;
+
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
@@ -20,9 +24,11 @@ import cf.cplace.platform.handler.Forwarder;
 import cf.cplace.platform.handler.Line;
 import cf.cplace.platform.handler.Station;
 import cf.cplace.platform.internationalization.Message;
+import cf.cplace.platform.orm.PersistentEntity;
 import cf.cplace.platform.test.TestHelper;
 import cf.cplace.platform.test.page.PageTestHelper;
 import cf.cplace.platform.util.Utilities;
+import cf.cplace.training.extended.ExtendedAppTypes;
 import de.cf.workshop.imdb.ImdbAppTypes;
 import de.cf.workshop.imdb.ImdbAppTypes.ACTOR;
 import de.cf.workshop.imdb.ImdbAppTypes.DIRECTOR;
@@ -43,6 +49,8 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
     };
 
     Page rootPage;
+    Page allDepartments;
+    Page allEmployees;
 
     @Override
     protected Station doDoBusinessLogic() {
@@ -54,9 +62,36 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
 
         rootPage = space.getRootPageWithoutReadAccessCheck();
 
+
+        Page headOffice = createAbteilung(space, "Head Office", TestHelper.getLocalizedString("Hauptsitz", "Head Office"), null, null, "HO", false, false, false);
+        Page humanResources = createAbteilung(space, "Human Resources", TestHelper.getLocalizedString("Personal", "Human Resources"), headOffice, 0.5, "HR", true, false, false);
+        Page development = createAbteilung(space, "Development", TestHelper.getLocalizedString("Entwicklung", "Development"), headOffice, 0.3, "DE", true, true, false);
+        Page payroll = createAbteilung(space, "Payroll", TestHelper.getLocalizedString("Gehaltsabrechnung", "Payroll"), humanResources, null, "PA", false, false, false);
+        Page minorOffice = createAbteilung(space, "Minor Office", TestHelper.getLocalizedString("Kleines Büro", "Minor Office"), headOffice, null, "MO", false, false, true);
+        Page minorHumanResources = createAbteilung(space, "Minor Human Resources", TestHelper.getLocalizedString("Kleine Personalabteilung", "Minor Human Resources"), minorOffice, null, "MH", false, false, true);
+
+        PersistentEntity.doOnWritableCopyAndPersistIfModified(payroll, page -> page._readersAreDefault().set(false));
+
+        createMitarbeiter(space, "Lubomir", "Król", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 1800.0, LocalDate.of(1898, 12, 31), payroll, development);
+        createMitarbeiter(space, "John", "Doe", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 5600.0, LocalDate.of(1912, 12, 12), payroll, development);
+        createMitarbeiter(space, "Albert", "Schrumpf", 20, ExtendedAppTypes.EMPLOYEE.Gender.male, 1500.0, LocalDate.now(), headOffice);
+        createMitarbeiter(space, "Hannobert", "Bader", 0, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.now().minusDays(1), headOffice);
+        createMitarbeiter(space, "Elke", "Bader", 40, ExtendedAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.now().plusDays(1), humanResources);
+        createMitarbeiter(space, "Sabine", "Bader", 60, ExtendedAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.of(1970, 1, 1), development);
+        createMitarbeiter(space, "Benno-Richard", "Bader", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1980, 6, 6), development);
+        createMitarbeiter(space, "Albert", "Wachs", 0, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1990, 9, 9), humanResources);
+        createMitarbeiter(space, "Christine", "Mauer", 40, ExtendedAppTypes.EMPLOYEE.Gender.female, 2200.0, LocalDate.of(1960, 12, 31), humanResources);
+        createMitarbeiter(space, "Knödelbert", "Mauer", 80, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(2010, 10, 10), development);
+        createMitarbeiter(space, "Schnabeltier", "Mauer", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1995, 9, 5), development);
+        createMitarbeiter(space, "Christoph", "Hujis", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 3600.0, LocalDate.of(1996, 6, 6), humanResources);
+        createMitarbeiter(space, "Kiara", "Hufnagel", 80, ExtendedAppTypes.EMPLOYEE.Gender.female, 3300.0, LocalDate.of(1997, 7, 9), development);
+
+        createMitarbeiter(space, "Klaus", "Kohl", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 4200.0, LocalDate.of(1998, 8, 8), development);
+
+
         Group imdbUsers = createGroupAndPersist("ImdbUsers", null);
-        for (int i = 0 ;i <= 10; i++) {
-            Person person = createPersonAndPersist("benutzer"+i+"@gmail.com", "Benutzer"+i);
+        for (int i = 0; i <= 10; i++) {
+            Person person = createPersonAndPersist("benutzer" + i + "@gmail.com", "Benutzer" + i);
             Person.createMembership(person, imdbUsers, null);
         }
 
@@ -103,7 +138,8 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
         return group;
     }
 
-    public static Page createGenre(PageSpace space, String genreName) { Page result = Page.SCHEMA.createWritablePage(space, ImdbAppTypes.GENRE.TYPE);
+    public static Page createGenre(PageSpace space, String genreName) {
+        Page result = Page.SCHEMA.createWritablePage(space, ImdbAppTypes.GENRE.TYPE);
         result._name().set(genreName);
         result.persist();
         return result;
