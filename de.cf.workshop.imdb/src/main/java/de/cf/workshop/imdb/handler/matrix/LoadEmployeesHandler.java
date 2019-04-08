@@ -4,18 +4,19 @@
 
 package de.cf.workshop.imdb.handler.matrix;
 
-import java.util.Date;
+import static cf.cplace.platform.test.ccx.TestTypes.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import cf.cplace.platform.assets.file.Document;
 import cf.cplace.platform.assets.file.Page;
 import cf.cplace.platform.client.Parameters;
-import cf.cplace.platform.handler.Forwarder;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
 import cf.cplace.platform.handler.Station;
-import cf.cplace.platform.handler.document.DownloadHandler;
 import cf.cplace.platform.test.ccx.TestTypes;
 import cf.cplace.platform.util.Gsonable;
 import de.cf.workshop.imdb.ImdbAppTypes;
@@ -41,38 +42,44 @@ public class LoadEmployeesHandler extends Handler {
     protected Station doBusinessLogic() {
         final List<Employee> employees = Page.SCHEMA.createQuery()
                 .where(it -> it._space().isEqualTo(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()))
-                .where(it -> it._customType().isEqualTo(TestTypes.EMPLOYEE.TYPE))
+                .where(it -> it._customType().isEqualTo(EMPLOYEE.TYPE))
+                .where(it -> it._customType().isEqualTo(EMPLOYEE.TYPE))
                 .findStream()
                 .map(Employee::new)
                 .collect(Collectors.toList());
 
+        // search.add(Filters.customAttribute(DEPARTMENT.ISTEMPLATE, true));
         result = new Result(employees);
 
         return DATA;
     }
 
     private static class Result extends Gsonable {
-        List<Employee> movies;
+        List<Employee> employees;
 
-        Result(List<Employee> movies) {
-            this.movies = movies;
+        Result(List<Employee> employees) {
+            this.employees = employees;
         }
     }
 
     private static class Employee {
-        String title;
-        String coverUrl;
-        Date releaseDate;
+        List<String> departments;
+        String firstName;
+        String lastName;
+        String id;
 
-        Employee(Page movie) {
-            title = movie.getName();
-
-            final Document cover = movie.get(ImdbAppTypes.MOVIE.COVER);
-            if (cover != null) {
-                coverUrl = Forwarder.getFullUrl(DownloadHandler.class, cover);
+        Employee(Page employee) {
+            firstName = employee.get(ImdbAppTypes.EMPLOYEE.SURNAME);
+            lastName = employee.get(ImdbAppTypes.EMPLOYEE.FAMILY_NAME);
+            id = employee.getUid();
+            List<Page> pDepartments = employee.get(ImdbAppTypes.EMPLOYEE.DEPARTMENTS);
+            departments = new ArrayList<>();
+            for (Page pDpartment : pDepartments) {
+                departments.add(pDepartments.get(0).getName());
             }
-
-            releaseDate = movie.get(ImdbAppTypes.MOVIE.RELEASEDATE);
+            Set<String> sDepartments = new HashSet<>(departments);
+            departments.clear();
+            departments.addAll(sDepartments);
         }
     }
 }

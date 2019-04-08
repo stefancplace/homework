@@ -111,11 +111,12 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
         Document cover2 = setTemplateFile(rootPage, "marsian.jpg");
         Document cover3 = setTemplateFile(rootPage, "StarWars.jpg");
 
-        createMovie(space, "Terminator", 5.0, action, arnold, cover1, 15000000.0, true, jamesCameron);
+        Page movie = createMovie(space, "Terminator", 5.0, action, arnold, cover1, 15000000.0, true, jamesCameron);
         createMovie(space, "Terminator 2", 5.0, action, arnold, cover1, 15000000.0, false, jamesCameron);
         createMovie(space, "Der Marsianer", 6.0, scienceFiction, mattDamon, cover2, 30000000.0, true, ridleyScott);
         createMovie(space, "Star Wars", 5.0, scienceFiction, harrisonFord, cover3, 5000000.0, true, georgeLucas);
 
+        rootPage = movie;
         return GO;
     }
 

@@ -1,11 +1,14 @@
 <de-cf-homework-matrix data-state="$state$" class="de-cf-workshop-style">
-    <div>Hello Angular</div>
-    <div ng-repeat="movie in moviePostersCtrl.movies">
-        <img ng-src="{{movie.coverUrl}}" alt="{{movie.title}}"/>
-        <h1>{{movie.title}}</h1>
-        <p>{{movie.date}}</p>
-    </div>
-
+    <table style="width: 100%">
+        <tr>
+            <th> </th>
+            <th ng-repeat="department in matrixCtrl.departments">{{department.name}}</th>
+        </tr>
+        <tr ng-repeat="employee in matrixCtrl.employees">
+            <td>{{employee.firstName}}{{employee.lastName}}</td>
+            <td><i class="fa fa-check-square-o"></i></td>
+        </tr>
+    </table>
 </de-cf-homework-matrix>
 
 
