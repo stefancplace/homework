@@ -2,7 +2,10 @@
  * Copyright 2019, collaboration Factory AG. All rights reserved.
  */
 
-import {IScope, IDirective} from 'angular';
+import {CPLACE_WIDGET_DIRECTIVE} from "@cf.cplace.platform/widgetLayout/directives/cplaceWidget";
+import {WidgetCtrl} from "@cf.cplace.platform/widgetLayout/controllers/WidgetCtrl";
+import {PostHeadersService} from "@cf.cplace.platform/services/PostHeadersService";
+import {IAugmentedJQuery, IHttpService, ITimeoutService, IDirective, IScope} from 'angular';
 
 export function deCfHomeworkMatrix(): IDirective {
     interface IMoviePostersState {
@@ -32,16 +35,20 @@ export function deCfHomeworkMatrix(): IDirective {
         departments: IDepartment[];
         matrix: boolean [][];
         private state: IMoviePostersState;
+        widgetCtrl: WidgetCtrl;
 
-        constructor($scope: ng.IScope, private $http: ng.IHttpService) {
+        constructor(protected $scope: IScope, protected $element: IAugmentedJQuery, protected $http: IHttpService, protected $timeout: ITimeoutService, protected postHeadersService: PostHeadersService) {
         }
 
-        initialize(state: IMoviePostersState) {
+        initialize(state: IMoviePostersState, widgetCtrl: WidgetCtrl) {
             this.state = state;
+            this.widgetCtrl = widgetCtrl;
+            this.widgetCtrl.enableReloadAction(this.loadMatrix.bind(this), this.$scope);
             this.loadMatrix();
         }
 
         private loadMatrix(): void {
+            this.widgetCtrl.loading = true;
             this.$http.get(this.state.employeesUrl)
                 .then((response: ng.IHttpPromiseCallbackArg<IMatrixData>) => {
                     this.employees = response.data.employees;
@@ -50,9 +57,10 @@ export function deCfHomeworkMatrix(): IDirective {
                             this.departments = response.data.departments;
                             this.setupMatrix();
                             console.log(this.matrix);
+                            this.widgetCtrl.loading = false;
+
                         });
                 });
-
         }
 
         private setupMatrix(): void {
@@ -83,15 +91,20 @@ export function deCfHomeworkMatrix(): IDirective {
             });
             return employeeIsIn;
         }
+
     }
 
     return {
         restrict: 'E',
         scope: true,
+        require: [`^^${CPLACE_WIDGET_DIRECTIVE}`, 'deCfHomeworkMatrix'],
         controller: MatrixCtrl,
         controllerAs: 'matrixCtrl',
-        link: (scope: IScope, element, attrs: any, matrixCtrl: MatrixCtrl) => {
-            matrixCtrl.initialize(JSON.parse(attrs['state']));
+        link: (scope, element, attrs, ctrls: any[]) => {
+            const widgetCtrl = ctrls[0] as WidgetCtrl;
+            const matrixCtrl = ctrls[1] as MatrixCtrl;
+
+            matrixCtrl.initialize(JSON.parse(attrs['state']), widgetCtrl);
         }
     };
 }
