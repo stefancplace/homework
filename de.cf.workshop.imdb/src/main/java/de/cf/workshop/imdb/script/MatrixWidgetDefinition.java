@@ -23,6 +23,7 @@ import cf.cplace.platform.widget.WidgetTemplateSubstitution;
 import de.cf.workshop.imdb.ImdbPlugin;
 import de.cf.workshop.imdb.handler.matrix.LoadDepartementsHandler;
 import de.cf.workshop.imdb.handler.matrix.LoadEmployeesHandler;
+import de.cf.workshop.imdb.handler.matrix.UpdateEmployeeHandler;
 
 public class MatrixWidgetDefinition extends WidgetDefinition {
 
@@ -57,6 +58,7 @@ public class MatrixWidgetDefinition extends WidgetDefinition {
                 state = new WidgetState();
                 state.employeesUrl = Forwarder.getFullUrl(LoadEmployeesHandler.class, embeddedIn);
                 state.departmentsUrl = Forwarder.getFullUrl(LoadDepartementsHandler.class, embeddedIn);
+                state.updateEmployeeUrl = Forwarder.getFullUrl(UpdateEmployeeHandler.class, embeddedIn);
 
             }
 
@@ -76,5 +78,6 @@ public class MatrixWidgetDefinition extends WidgetDefinition {
     private static class WidgetState extends Gsonable {
         String employeesUrl;
         String departmentsUrl;
+        String updateEmployeeUrl;
     }
 }

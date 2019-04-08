@@ -11,6 +11,7 @@ export function deCfHomeworkMatrix(): IDirective {
     interface IMoviePostersState {
         departmentsUrl: string;
         employeesUrl: string;
+        updateEmployeeUrl: string;
     }
 
     interface IMatrixData {
@@ -58,7 +59,6 @@ export function deCfHomeworkMatrix(): IDirective {
                             this.setupMatrix();
                             console.log(this.matrix);
                             this.widgetCtrl.loading = false;
-
                         });
                 });
         }

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import cf.cplace.platform.assets.file.Page;
+import cf.cplace.platform.assets.search.Filters;
+import cf.cplace.platform.assets.search.Search;
 import cf.cplace.platform.client.Parameters;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
@@ -64,7 +66,7 @@ public class LoadDepartementsHandler extends Handler {
 
         Department(Page department) {
             name = department.getName();
-            id=department.getUid();
+            id = department.getUid();
         }
     }
 }

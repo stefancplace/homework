@@ -4,7 +4,7 @@
 
 package de.cf.workshop.imdb.handler.matrix;
 
-import static cf.cplace.platform.test.ccx.TestTypes.*;
+import static cf.cplace.platform.test.ccx.TestTypes.EMPLOYEE;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,21 +17,20 @@ import cf.cplace.platform.client.Parameters;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
 import cf.cplace.platform.handler.Station;
-import cf.cplace.platform.test.ccx.TestTypes;
 import cf.cplace.platform.util.Gsonable;
 import de.cf.workshop.imdb.ImdbAppTypes;
 
-public class LoadEmployeesHandler extends Handler {
+public class UpdateEmployeeHandler extends Handler {
 
     final Station DATA = new GsonAnswerStation() {
         @Override
         protected String getString() {
-            return result.toJson();
+            return employee.toJson();
         }
     };
 
     private Page embeddingPage;
-    private Result result;
+    private Employee employee;
 
     @Override
     protected void checkAccess() {
@@ -40,28 +39,13 @@ public class LoadEmployeesHandler extends Handler {
 
     @Override
     protected Station doBusinessLogic() {
-        final List<Employee> employees = Page.SCHEMA.createQuery()
-                .where(it -> it._space().isEqualTo(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()))
-                .where(it -> it._customType().isEqualTo(EMPLOYEE.TYPE))
-                .findStream()
-                .map(Employee::new)
-                .collect(Collectors.toList());
 
-        // search.add(Filters.customAttribute(DEPARTMENT.ISTEMPLATE, true));
-        result = new Result(employees);
 
         return DATA;
     }
 
-    private static class Result extends Gsonable {
-        List<Employee> employees;
 
-        Result(List<Employee> employees) {
-            this.employees = employees;
-        }
-    }
-
-    private static class Employee {
+    private static class Employee extends Gsonable {
         List<String> departments;
         String firstName;
         String lastName;

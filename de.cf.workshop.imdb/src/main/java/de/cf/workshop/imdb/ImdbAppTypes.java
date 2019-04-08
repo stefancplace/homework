@@ -4,18 +4,23 @@
 
 package de.cf.workshop.imdb;
 
+import java.time.LocalDate;
+
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 
+import cf.cplace.platform.assets.WidgetContainer;
 import cf.cplace.platform.assets.WidgetWithContent;
 import cf.cplace.platform.assets.custom.BooleanValue;
 import cf.cplace.platform.assets.custom.CustomSerializable;
+import cf.cplace.platform.assets.custom.CustomValue;
 import cf.cplace.platform.assets.custom.FixedAppTypes;
 import cf.cplace.platform.assets.custom.LocalizedPageNamesMode;
 import cf.cplace.platform.assets.custom.LocalizedStringValue;
 import cf.cplace.platform.assets.custom.Multiplicities;
 import cf.cplace.platform.assets.custom.NumberValue;
+import cf.cplace.platform.assets.custom.ReferenceValue;
 import cf.cplace.platform.assets.custom.StringValue;
 import cf.cplace.platform.assets.custom.def.AttributeDef;
 import cf.cplace.platform.assets.custom.def.IAttributeDefEnum;
@@ -31,16 +36,23 @@ import cf.cplace.platform.assets.custom.def.SinglePageReferenceAttributeDef;
 import cf.cplace.platform.assets.custom.def.SingleStringAttributeDef;
 import cf.cplace.platform.assets.custom.def.TypeDef;
 import cf.cplace.platform.assets.custom.typeConstraints.factory.TypeConstraintFactories;
+import cf.cplace.platform.assets.file.Page;
+import cf.cplace.platform.assets.file.PageSpace;
 import cf.cplace.platform.assets.layout.Column;
 import cf.cplace.platform.assets.layout.Layout;
 import cf.cplace.platform.assets.layout.Row;
 import cf.cplace.platform.assets.search.ReferenceOperator;
 import cf.cplace.platform.assets.search.RelativeUidFilter;
+import cf.cplace.platform.internationalization.LocalizedString;
 import cf.cplace.platform.internationalization.Message;
+import cf.cplace.platform.orm.PersistentEntity;
+import cf.cplace.platform.script.widgets.BatchJobQuickGlanceWidgetDefinition;
+import cf.cplace.platform.util.DateUtil;
 import cf.cplace.platform.widget.WidgetContainerDef;
 import cf.cplace.platform.widget.WidgetHelper;
 import cf.cplace.training.extended.ExtendedApp;
 import cf.cplace.training.extended.ExtendedAppTypes;
+import cf.cplace.training.extended.ExtendedPlugin;
 import cf.cplace.training.extended.SecurityQuestionConstraintExtension;
 import cf.cplace.training.extended.script.EmployeesWidgetDefinition;
 import de.cf.workshop.imdb.script.CreateSequelWidgetDefinition;
@@ -569,5 +581,7 @@ public class ImdbAppTypes {
                         .toJson()
                 , WidgetHelper.EMBEDDED_SEARCH_AS_TABLE_TYPE);
     }
+
+
 
 }
