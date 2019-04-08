@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="$assetsPluginUrlPrefix()$/generated_css/plugin.css"/>
+
 <de-cf-homework-matrix data-state="$state$" class="de-cf-workshop-style">
     <table style="width: 100%">
         <tr>
@@ -5,7 +7,7 @@
             <th ng-repeat="department in matrixCtrl.departments">{{department.name}}</th>
         </tr>
         <tr ng-repeat="employee in matrixCtrl.employees track by employee.id">
-            <td>{{employee.firstName}}{{employee.lastName}}</td>
+            <td>{{employee.firstName}} {{employee.lastName}}</td>
             <td ng-repeat="department in matrixCtrl.departments">
 
                 <i ng-show="matrixCtrl.isEmployeeInDepartment(employee,department.name)" class="fa fa-check-square-o"></i>
