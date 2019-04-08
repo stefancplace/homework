@@ -203,7 +203,7 @@ public class ImdbAppTypes {
 
     @FixedAppTypes.Fixed
     public static class DEPARTMENT {
-        public static final String TYPE_NAME = "cf.cplace.training.extended.department";
+        public static final String TYPE_NAME = "cf.cplace.training.extended.departments";
 
         public static final Message departmentId_name = new Message() {
         };
