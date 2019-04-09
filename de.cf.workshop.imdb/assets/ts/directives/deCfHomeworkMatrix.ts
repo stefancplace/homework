@@ -24,11 +24,13 @@ export function deCfHomeworkMatrix(): IDirective {
         firstName: String;
         lastName: String;
         id: String;
+        url: String;
     }
 
     interface IDepartment {
         name: String;
         id: String;
+        url: String;
     }
 
     class MatrixCtrl {
@@ -74,6 +76,18 @@ export function deCfHomeworkMatrix(): IDirective {
                     }
                 }
             }
+        }
+
+        private updateEmployee(employee: IEmployee, department: String): void {
+
+            var data = {employeeId: employee.id, departmentId: department};
+            this.$http({
+                url: this.state.updateEmployeeUrl,
+                method: "POST",
+                params: data
+            }).then((response: ng.IHttpPromiseCallbackArg<IMatrixData>) => {
+                this.loadMatrix()
+            });
         }
 
         private isEmployeeInDepartment(employee: IEmployee, department: String): boolean {

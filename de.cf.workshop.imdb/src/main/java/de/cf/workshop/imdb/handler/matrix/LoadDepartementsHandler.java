@@ -7,6 +7,7 @@ package de.cf.workshop.imdb.handler.matrix;
 import static cf.cplace.platform.test.ccx.TestTypes.EMPLOYEE;
 import static de.cf.workshop.imdb.ImdbAppTypes.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +40,16 @@ public class LoadDepartementsHandler extends Handler {
 
     @Override
     protected Station doBusinessLogic() {
-        final List<Department> departments = Page.SCHEMA.createQuery()
-                .where(it -> it._space().isEqualTo(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()))
-                .where(it -> it._customType().isEqualTo(DEPARTMENT.TYPE))
-                .findStream()
-                .map(Department::new)
-                .collect(Collectors.toList());
+        Search s = new Search();
+        s.add(Filters.space(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()));
+        s.add(Filters.type(DEPARTMENT.TYPE));
+        s.add(Filters.customAttribute(DEPARTMENT.ISTEMPLATE, false));
+        s.addAlphabeticalSort();
+        List<Page> pDepartments = s.findAllPagesAsList();
+        List<Department> departments = new ArrayList<>();
+        for (Page pDepartment : pDepartments) {
+            departments.add(new Department(pDepartment));
+        }
 
         // search.add(Filters.customAttribute(DEPARTMENT.ISTEMPLATE, true));
         result = new Result(departments);
@@ -63,10 +68,12 @@ public class LoadDepartementsHandler extends Handler {
     private static class Department {
         String name;
         String id;
+        String url;
 
         Department(Page department) {
             name = department.getName();
             id = department.getUid();
+            url = department.getUrl();
         }
     }
 }

@@ -13,11 +13,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import cf.cplace.platform.assets.file.Page;
+import cf.cplace.platform.assets.search.Filters;
+import cf.cplace.platform.assets.search.Search;
 import cf.cplace.platform.client.Parameters;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
 import cf.cplace.platform.handler.Station;
-import cf.cplace.platform.test.ccx.TestTypes;
 import cf.cplace.platform.util.Gsonable;
 import de.cf.workshop.imdb.ImdbAppTypes;
 
@@ -40,12 +41,16 @@ public class LoadEmployeesHandler extends Handler {
 
     @Override
     protected Station doBusinessLogic() {
-        final List<Employee> employees = Page.SCHEMA.createQuery()
-                .where(it -> it._space().isEqualTo(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()))
-                .where(it -> it._customType().isEqualTo(EMPLOYEE.TYPE))
-                .findStream()
-                .map(Employee::new)
-                .collect(Collectors.toList());
+        Search s = new Search();
+        s.add(Filters.space(embeddingPage.getSpaceNotNullWithoutReadAccessCheck()));
+        s.add(Filters.type(ImdbAppTypes.EMPLOYEE.TYPE));
+        s.addAlphabeticalSort();
+        List<Page> pEmployees = s.findAllPagesAsList();
+        List<Employee> employees = new ArrayList<>();
+        for (Page pEmployee : pEmployees) {
+            employees.add(new Employee(pEmployee));
+        }
+
 
         // search.add(Filters.customAttribute(DEPARTMENT.ISTEMPLATE, true));
         result = new Result(employees);
@@ -66,15 +71,17 @@ public class LoadEmployeesHandler extends Handler {
         String firstName;
         String lastName;
         String id;
+        String url;
 
         Employee(Page employee) {
             firstName = employee.get(ImdbAppTypes.EMPLOYEE.SURNAME);
             lastName = employee.get(ImdbAppTypes.EMPLOYEE.FAMILY_NAME);
             id = employee.getUid();
+            url = employee.getUrl();
             List<Page> pDepartments = employee.get(ImdbAppTypes.EMPLOYEE.DEPARTMENTS);
             departments = new ArrayList<>();
             for (Page pDpartment : pDepartments) {
-                departments.add(pDepartments.get(0).getName());
+                departments.add(pDpartment.getName());
             }
             Set<String> sDepartments = new HashSet<>(departments);
             departments.clear();

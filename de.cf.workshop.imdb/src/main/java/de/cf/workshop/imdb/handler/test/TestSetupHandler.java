@@ -40,7 +40,6 @@ import cf.cplace.platform.util.DateUtil;
 import cf.cplace.platform.util.Utilities;
 import cf.cplace.platform.widget.WidgetContainerDef;
 import cf.cplace.platform.widget.WidgetHelper;
-import cf.cplace.training.extended.ExtendedAppTypes;
 import cf.cplace.training.extended.ExtendedPlugin;
 import de.cf.workshop.imdb.ImdbAppTypes;
 import de.cf.workshop.imdb.ImdbAppTypes.ACTOR;
@@ -85,21 +84,21 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
 
         PersistentEntity.doOnWritableCopyAndPersistIfModified(payroll, page -> page._readersAreDefault().set(false));
 
-        this.createEmployee(space, "Lubomir", "Król", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 1800.0, LocalDate.of(1898, 12, 31), payroll, development);
-        createEmployee(space, "John", "Doe", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 5600.0, LocalDate.of(1912, 12, 12), payroll, development);
-        createEmployee(space, "Albert", "Schrumpf", 20, ExtendedAppTypes.EMPLOYEE.Gender.male, 1500.0, LocalDate.now(), headOffice);
-        createEmployee(space, "Hannobert", "Bader", 0, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.now().minusDays(1), headOffice);
-        createEmployee(space, "Elke", "Bader", 40, ExtendedAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.now().plusDays(1), humanResources);
-        createEmployee(space, "Sabine", "Bader", 60, ExtendedAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.of(1970, 1, 1), development);
-        createEmployee(space, "Benno-Richard", "Bader", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1980, 6, 6), development);
-        createEmployee(space, "Albert", "Wachs", 0, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1990, 9, 9), humanResources);
-        createEmployee(space, "Christine", "Mauer", 40, ExtendedAppTypes.EMPLOYEE.Gender.female, 2200.0, LocalDate.of(1960, 12, 31), humanResources);
-        createEmployee(space, "Knödelbert", "Mauer", 80, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(2010, 10, 10), development);
-        createEmployee(space, "Schnabeltier", "Mauer", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1995, 9, 5), development);
-        createEmployee(space, "Christoph", "Hujis", 60, ExtendedAppTypes.EMPLOYEE.Gender.male, 3600.0, LocalDate.of(1996, 6, 6), humanResources);
-        createEmployee(space, "Kiara", "Hufnagel", 80, ExtendedAppTypes.EMPLOYEE.Gender.female, 3300.0, LocalDate.of(1997, 7, 9), development);
+        this.createEmployee(space, "Lubomir", "Król", 60, ImdbAppTypes.EMPLOYEE.Gender.male, 1800.0, LocalDate.of(1898, 12, 31), payroll, development);
+        createEmployee(space, "John", "Doe", 100, ImdbAppTypes.EMPLOYEE.Gender.male, 5600.0, LocalDate.of(1912, 12, 12), payroll, development);
+        createEmployee(space, "Albert", "Schrumpf", 20, ImdbAppTypes.EMPLOYEE.Gender.male, 1500.0, LocalDate.now(), headOffice);
+        createEmployee(space, "Hannobert", "Bader", 0, ImdbAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.now().minusDays(1), headOffice);
+        createEmployee(space, "Elke", "Bader", 40, ImdbAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.now().plusDays(1), humanResources);
+        createEmployee(space, "Sabine", "Bader", 60, ImdbAppTypes.EMPLOYEE.Gender.female, 0.0, LocalDate.of(1970, 1, 1), development);
+        createEmployee(space, "Benno-Richard", "Bader", 100, ImdbAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1980, 6, 6), development);
+        createEmployee(space, "Albert", "Wachs", 0, ImdbAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1990, 9, 9), humanResources);
+        createEmployee(space, "Christine", "Mauer", 40, ImdbAppTypes.EMPLOYEE.Gender.female, 2200.0, LocalDate.of(1960, 12, 31), humanResources);
+        createEmployee(space, "Knödelbert", "Mauer", 80, ImdbAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(2010, 10, 10), development);
+        createEmployee(space, "Schnabeltier", "Mauer", 60, ImdbAppTypes.EMPLOYEE.Gender.male, 0.0, LocalDate.of(1995, 9, 5), development);
+        createEmployee(space, "Christoph", "Hujis", 60, ImdbAppTypes.EMPLOYEE.Gender.male, 3600.0, LocalDate.of(1996, 6, 6), humanResources);
+        createEmployee(space, "Kiara", "Hufnagel", 80, ImdbAppTypes.EMPLOYEE.Gender.female, 3300.0, LocalDate.of(1997, 7, 9), development);
 
-        createEmployee(space, "Klaus", "Kohl", 100, ExtendedAppTypes.EMPLOYEE.Gender.male, 4200.0, LocalDate.of(1998, 8, 8), development);
+        createEmployee(space, "Klaus", "Kohl", 100, ImdbAppTypes.EMPLOYEE.Gender.male, 4200.0, LocalDate.of(1998, 8, 8), development);
 
 
         Group imdbUsers = createGroupAndPersist("ImdbUsers", null);
@@ -133,11 +132,10 @@ public class TestSetupHandler extends AbstractTestSetupHandler {
         return GO;
     }
 
-    public static Page createEmployee(PageSpace space, String firstName, String lastName, int utilization, ExtendedAppTypes.EMPLOYEE.Gender gender, Double salary, LocalDate dateOfBirth, Page... abteilungen) {
-        Page result = Page.SCHEMA.createWritablePage(space, ExtendedAppTypes.EMPLOYEE.TYPE);
+    public static Page createEmployee(PageSpace space, String firstName, String lastName, int utilization, ImdbAppTypes.EMPLOYEE.Gender gender, Double salary, LocalDate dateOfBirth, Page... abteilungen) {
+        Page result = Page.SCHEMA.createWritablePage(space, ImdbAppTypes.EMPLOYEE.TYPE);
         result.set(ImdbAppTypes.EMPLOYEE.SURNAME, firstName);
         result.set(ImdbAppTypes.EMPLOYEE.FAMILY_NAME, lastName);
-        result.set(ImdbAppTypes.EMPLOYEE.UTILIZATION, (double) utilization);
         result.set(ImdbAppTypes.EMPLOYEE.SALARY, utilization * 1000d);
         result.set(ImdbAppTypes.EMPLOYEE.DEPARTMENTS, Lists.newArrayList(abteilungen));
         result.set(ImdbAppTypes.EMPLOYEE.GENDER, gender);
