@@ -9,6 +9,7 @@ import static cf.cplace.platform.test.ccx.TestTypes.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import cf.cplace.platform.client.Parameters;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
 import cf.cplace.platform.handler.Station;
+import cf.cplace.platform.orm.Feature;
 import cf.cplace.platform.services.IconService;
 import cf.cplace.platform.util.Gsonable;
 import de.cf.workshop.imdb.ImdbAppTypes;
@@ -57,6 +59,18 @@ public class LoadEmployeesHandler extends Handler {
         result = new Result(employees);
 
         return DATA;
+    }
+
+    private static boolean mayEditDepartmentsAttribute(final Page employee) {
+                /*
+         * We do not ask if the current user can edit the employee as a page in general,
+         * but if she/he can change the DEPARTMENTS attribute specifically. We do this
+         * since there are extensions to overrule permissions on attribute level
+         * (see OverruleCustomAttributeMayEditFeatureAppExtension)
+         */
+        return Optional.ofNullable(employee.getCustomAttribute(EMPLOYEE.DEPARTMENTS.name))
+                .map(Feature::isInPlaceEditableAndMayEdit)
+                .orElse(false);
     }
 
     private static class Result extends Gsonable {

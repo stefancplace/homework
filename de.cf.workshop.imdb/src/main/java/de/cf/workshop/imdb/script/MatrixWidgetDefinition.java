@@ -73,6 +73,8 @@ public class MatrixWidgetDefinition extends WidgetDefinition {
             @Override
             public void putSubstitutions(Template template) {
                 template.put("state", PrintSubstitution.printing(Escaping.htmlAttribute, () -> state.toJson()));
+                template.put("title", PrintSubstitution.printing(Escaping.htmlAttribute, () -> conf.get(CONFIGURATION.TITLE).getForCurrentUserLanguage()));
+
             }
         };
     }
