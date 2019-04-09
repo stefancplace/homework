@@ -4,12 +4,15 @@
     <table style="width: 100%">
         <tr>
             <th></th>
-            <th  ng-repeat="department in matrixCtrl.departments"><i class="{{department.icon}}"></i>
+            <th ng-repeat="department in matrixCtrl.departments"><i class="{{department.icon}}"></i>
                 <a href="{{department.url}}">{{department.name}}</a>
             </th>
         </tr>
         <tr ng-repeat="employee in matrixCtrl.employees track by employee.id">
-            <td style="min-width: 45px;text-align: left"><i class="{{employee.icon}}"><a href="{{employee.url}}">{{employee.firstName}} {{employee.lastName}}</a></td>
+            <td style="min-width: 50px;text-align: left">
+                <i class="{{employee.icon}}"></i>
+                <a href="{{employee.url}}">{{employee.firstName}} {{employee.lastName}}</a>
+            </td>
             <td ng-repeat="department in matrixCtrl.departments" ng-click="matrixCtrl.updateEmployee(employee,department.id)">
                 <i ng-show="matrixCtrl.isEmployeeInDepartment(employee,department.name)" class="fa fa-check-square-o"></i>
             </td>
