@@ -19,6 +19,7 @@ import cf.cplace.platform.client.Parameters;
 import cf.cplace.platform.handler.GsonAnswerStation;
 import cf.cplace.platform.handler.Handler;
 import cf.cplace.platform.handler.Station;
+import cf.cplace.platform.services.IconService;
 import cf.cplace.platform.util.Gsonable;
 import de.cf.workshop.imdb.ImdbAppTypes;
 
@@ -72,6 +73,7 @@ public class LoadEmployeesHandler extends Handler {
         String lastName;
         String id;
         String url;
+        String icon;
 
         Employee(Page employee) {
             firstName = employee.get(ImdbAppTypes.EMPLOYEE.SURNAME);
@@ -86,6 +88,7 @@ public class LoadEmployeesHandler extends Handler {
             Set<String> sDepartments = new HashSet<>(departments);
             departments.clear();
             departments.addAll(sDepartments);
+            icon = IconService.getIconClassFromIconName(employee.getIconName());
         }
     }
 }

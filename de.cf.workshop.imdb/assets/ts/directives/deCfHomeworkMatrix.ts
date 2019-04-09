@@ -25,12 +25,14 @@ export function deCfHomeworkMatrix(): IDirective {
         lastName: String;
         id: String;
         url: String;
+        icon: String;
     }
 
     interface IDepartment {
         name: String;
         id: String;
         url: String;
+        icon: String;
     }
 
     class MatrixCtrl {

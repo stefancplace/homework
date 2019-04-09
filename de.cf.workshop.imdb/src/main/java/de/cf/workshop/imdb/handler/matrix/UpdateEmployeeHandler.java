@@ -89,9 +89,6 @@ public class UpdateEmployeeHandler extends Handler {
         } else {
             depts.add(dept);
         }
-        CustomEntity employeeEntityCopy = employeeEntity.createWritableCopy();
-        employeeEntityCopy.set(ImdbAppTypes.EMPLOYEE.DEPARTMENTS, depts);
-        employeeEntityCopy.persist();
         PersistentEntity.doOnWritableCopyAndPersistIfModified(employeeEntity, copy -> {
             copy.set(ImdbAppTypes.EMPLOYEE.DEPARTMENTS, depts);
         });
